@@ -7,8 +7,7 @@ Mapa interactivo: Permite visualizar y marcar la ubicación exacta del problema.
 Formulario de reporte: El usuario puede describir el daño y adjuntar una imagen.
 Seguimiento del reporte: Cada incidente tiene un estado: pendiente, en reparación o resuelto.
 Registro e inicio de sesión: Los usuarios pueden crear cuentas y acceder a su historial de reportes.
-
-🗃️ Base de datos MySQL: Almacena toda la información de usuarios y reportes.
+Base de datos MySQL: Almacena toda la información de usuarios y reportes.
 
 Tecnologías utilizadas
 
