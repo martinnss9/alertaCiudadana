@@ -3,10 +3,10 @@ if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
 if (!isset($_SESSION['usuario'])) {
-    header("Location:app/presentacion/paginas/applogin.php");
-    exit();
+    #header("Location:/proyecto final/app/presentacion/paginas/applogin.php");
+    #exit();
 }
-$usuario = $_SESSION['usuario'];
+$usuario = $_SESSION['Usuario'];
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ $usuario = $_SESSION['usuario'];
 <a href="misreportes.php">Mis Reportes</a>
 <a href="logout.php">Cerrar Sesion</a>
 
-<?php echo $_SESSION['gmail'] ; ?>
+<?php echo $_SESSION['Gmail'] ; ?>
 </nav>
 </header>
 

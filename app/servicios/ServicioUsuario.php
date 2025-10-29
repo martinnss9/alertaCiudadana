@@ -1,6 +1,6 @@
 <?php
 
-include "../app/persistencia/PersistenciaUsuario.php"
+include "../../persistencia/PersistenciaUsuario.php";
 
 class ServicioUsuario {
 
@@ -11,7 +11,7 @@ class ServicioUsuario {
         if ($datosUsuario != null){
             $_SESSION['Usuario'] = $datosUsuario['Usuario'];
             $_SESSION['Gmail'] = $datosUsuario['Gmail'];
-            header("Location: index.php");
+            header("Location: ../../../index.php");
         } else {
             header("Location: error.php");
         }

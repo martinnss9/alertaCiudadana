@@ -1,7 +1,7 @@
 <?php
 session_start();
-include "./persistencia/conexiones.php";
-include "./app/servicio/ServicioUsuario.php";
+include "../../persistencia/conexiones.php";
+include "../../servicios/ServicioUsuario.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $gmail = $_POST['email'];
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <h2>Iniciar Sesion</h2>
 <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
 
-<form method="POST" action="login.php">
+<form method="POST">
     <label for="email">Correo:</label>
     <input type="email" id="email" name="email" required>
 
