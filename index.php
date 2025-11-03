@@ -1,4 +1,5 @@
 <?php
+include 'register.php';
 if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
@@ -22,9 +23,9 @@ $usuario = $_SESSION['Usuario'];
 <h1>Alerta Ciudadana</h1>
 <nav>
 <a href="index.php">Inicio</a>
-<a href="reportar.php">Reportar</a>
-<a href="misreportes.php">Mis Reportes</a>
-<a href="logout.php">Cerrar Sesion</a>
+<a href="app/presentacion/paginas/reportar.php">Reportar</a>
+<a href="app/presentacion/paginas/misreportes.php">Mis Reportes</a>
+<a href="app/presentacion/paginas/logout.php">Cerrar Sesion</a>
 
 <?php echo $_SESSION['Gmail'] ; ?>
 </nav>
@@ -33,11 +34,9 @@ $usuario = $_SESSION['Usuario'];
 <main>
         <section class="bienvenida">
             <h2>Bienvenido a Alerta Ciudadana</h2>
-            <p>Esta plataforma fue creada para que los ciudadanos puedan <strong>reportar problemas en la via publica</strong>, como:</p>
+            <p>Esta plataforma fue creada para que los ciudadanos puedan <strong>reportar problemas en la via publica</strong>, especificamente:</p>
             <ul>
                 <li>🚧 <strong>Baches</strong> en calles</li>
-                <li>💡 <strong>Problemas de alumbrado</strong></li>
-                <li>🛣️ <strong>Calles en mal estado</strong></li>
             </ul>
 
             <h3>¿Como funciona?</h3>

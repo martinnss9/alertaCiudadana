@@ -7,7 +7,7 @@ class PersistenciaUsuario {
 $host = "localhost";
 $user = "root";           // Usuario XAMPP
 $password = "";           // Contraseña XAMPP
-$database = "registro";   // Tu base de datos
+$database = "alertaciudadana";   // Tu base de datos
 
 // Crear conexion
 $conn = new mysqli($host, $user, $password, $database);

@@ -1,6 +1,5 @@
 <?php
-session_start();
-include "conexiones.php";
+include "../../persistencia/conexiones.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = $_POST['nombre'];
@@ -25,6 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = "Error al registrar usuario. Intenta nuevamente.";
         }
     }
+    session_start();
+    $_SESSION['usuario'] = $usuario;
+    $_SESSION['gmail'] = $gmail;
 }
 ?>
 
@@ -33,16 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
 <meta charset="UTF-8">
 <title>Registro - Alerta Ciudadana</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 <header>
 <h1>Alerta Ciudadana</h1>
 <nav>
-<a href="index.php">Inicio</a>
-<a href="reportar.php">Reportar</a>
-<a href="misreportes.php">Mis Reportes</a>
-<a href="login.php">Login</a>
+<a href="../../../index.php">Inicio</a>
+<a href="./reportar.php">Reportar</a>
+<a href="./misreportes.php">Mis Reportes</a>
+<a href="logout.php">Login</a>
 </nav>
 </header>
 

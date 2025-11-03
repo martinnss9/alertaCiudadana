@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'conexion.php';
+require_once 'conexiones.php';
 
 if (!isset($_SESSION['usuario'])) {
     echo "No estás autenticado.";

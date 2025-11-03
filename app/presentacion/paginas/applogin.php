@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <header>
 <h1>Alerta Ciudadana</h1>
 <nav>
-<a href="index.php">Inicio</a>
+<a href="../../../index.php">Inicio</a>
 <a href="reportar.php">Reportar</a>
 <a href="misreportes.php">Mis Reportes</a>
 </nav>
