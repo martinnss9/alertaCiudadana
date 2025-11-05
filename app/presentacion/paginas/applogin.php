@@ -1,15 +1,11 @@
 <?php
-session_start();
-include "../../persistencia/conexiones.php";
-include "../../servicios/ServicioUsuario.php";
+require_once '../../servicios/ServicioUsuario.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {	
+$gmail = htmlspecialchars($_POST['email'] ?? '');
+$password = htmlspecialchars($_POST['password'] ?? '');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $gmail = $_POST['email'];
-    $contrasenia = $_POST['password'];
-
-    $servicioUsuario = new ServicioUsuario();
-
-    $servicioUsuario->loginUsuario($gmail, $contrasenia);
+$servicioUsuario = new ServicioUsuario();
+$servicioUsuario->LoguearUsuario($gmail, $password);
 }
 ?>
 
@@ -25,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <h1>Alerta Ciudadana</h1>
 <nav>
 <a href="../../../index.php">Inicio</a>
-<a href="reportar.php">Reportar</a>
-<a href="misreportes.php">Mis Reportes</a>
+<a href="app/presentacion/paginas/applogin.php">Iniciar Sesion</a>
+<a href="register.php">Registrarse</a>
 </nav>
 </header>
 

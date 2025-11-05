@@ -1,7 +1,11 @@
 <?php
 session_start();
 
-$usuario = $_SESSION['usuario'];
+if (!isset($_SESSION['usuario'])) {
+    header("Location: applogin.php"); // redirige al login si no hay sesion
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -1,11 +1,12 @@
 <?php
-if(session_status() == PHP_SESSION_NONE){
-    session_start();
-}
+session_start();
+
 if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
+    echo "No has iniciado sesion.";
+    header("Location: applogin.php"); // redirige al login si no hay sesion
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

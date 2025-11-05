@@ -1,32 +1,14 @@
 <?php
-include "../../persistencia/conexiones.php";
+require_once '../../servicios/ServicioRegister.php';
+include_once '../../persistencia/PersistenciaUsuario.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $usuario = $_POST['nombre'];
-    $gmail = $_POST['email'];
-    $contrasela = $_POST['password'];
+$nombre = htmlspecialchars($_POST['nombre'] ?? '');
+$gmail = htmlspecialchars($_POST['gmail'] ?? '');
+$password = htmlspecialchars($_POST['password'] ?? '');
 
-    // Revisar si correo ya existe
-    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE Gmail = ?");
-    $stmt->bind_param("s", $gmail);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $error = "Ese correo ya esta registrado";
-    } else {
-        // Insertar usuario
-        $stmt = $conn->prepare("INSERT INTO usuarios (Usuario, Contrasela, Gmail) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $usuario, $contrasela, $gmail);
-        if ($stmt->execute()) {
-            $success = "Registro exitoso. Ahora puedes iniciar sesion.";
-        } else {
-            $error = "Error al registrar usuario. Intenta nuevamente.";
-        }
-    }
-    session_start();
-    $_SESSION['usuario'] = $usuario;
-    $_SESSION['gmail'] = $gmail;
+$servicioRegister = new ServicioRegister();
+$servicioRegister->IngresarUsuario($nombre, $gmail, $password);
 }
 ?>
 
@@ -42,9 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <h1>Alerta Ciudadana</h1>
 <nav>
 <a href="../../../index.php">Inicio</a>
-<a href="./reportar.php">Reportar</a>
-<a href="./misreportes.php">Mis Reportes</a>
-<a href="logout.php">Login</a>
+<a href="applogin.php">Login</a>
 </nav>
 </header>
 
@@ -61,7 +41,7 @@ if(isset($success)) echo "<p style='color:green;'>$success</p>";
 <input type="text" id="nombre" name="nombre" required>
 
 <label for="email">Correo:</label>
-<input type="email" id="email" name="email" required>
+<input type="email" id="gmail" name="gmail" required>
 
 <label for="password">Contraseña:</label>
 <input type="password" id="password" name="password" required>

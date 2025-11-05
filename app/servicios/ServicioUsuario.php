@@ -3,21 +3,20 @@
 include "../../persistencia/PersistenciaUsuario.php";
 
 class ServicioUsuario {
-
-    public function loginUsuario($usuario, $contrasenia){
-        
-        $pUsuario = new PersistenciaUsuario();
-        $datosUsuario = $pUsuario->obtenerPorUsuarioYContrasenia($usuario, $contrasenia);
-        if ($datosUsuario != null){
-            $_SESSION['Usuario'] = $datosUsuario['Usuario'];
-            $_SESSION['Gmail'] = $datosUsuario['Gmail'];
+    public function LoguearUsuario($gmail, $password) 
+        $persistencia = new PersistenciaUsuario(); {
+        $Usuario = $persistencia->obtenerPorUsuarioYContrasenia( $gmail, $password);
+        {
+        if ($usuario) {
+            session_start();
+            $_SESSION['usuario'] = $usuario['Usuario'];
             header("Location: ../../../index.php");
+            echo $usuario['Usuario'];
+            exit();
         } else {
-            header("Location: error.php");
+            $error = "Credenciales invalidas. Por favor, intenta de nuevo.";
+        header("Location: ../paginas/applogin.php?error=" . urlencode($error));
+        exit();
         }
-    
-
-
     }
-
-}
+}                                                                                                                                                             Parse error: syntax error, unexpected variable "$persistencia", expecting ";" or "{" in C:\xampp\htdocs\proyecto final\app\servicios\ServicioUsuario.php on line 7

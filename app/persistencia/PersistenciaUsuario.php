@@ -1,39 +1,18 @@
 <?php
-include "../../persistencia/conexiones.php";
+include_once "conexiones.php"; 
+
 class PersistenciaUsuario {
-
-    public function obtenerPorUsuarioYContrasenia($usuario, $contrasenia){
-     // Datos de la base de datos
-$host = "localhost";
-$user = "root";           // Usuario XAMPP
-$password = "";           // Contraseña XAMPP
-$database = "alertaciudadana";   // Tu base de datos
-
-// Crear conexion
-$conn = new mysqli($host, $user, $password, $database);
-
-// Verifica conexion
-if ($conn->connect_error) {
-    die("Conexion fallida: " . $conn->connect_error);
-}
-$conn->set_charset("utf8");   
-    
-        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE Gmail = ? AND Contrasela = ?");
-        $stmt->bind_param("ss", $usuario, $contrasenia);
+    public function IngresarUsuario($gmail, $password) {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE gmail = ? AND contrasela = ?");
+        $stmt->bind_param("ss", $gmail, $password);
         $stmt->execute();
-        $result = $stmt->get_result();
-    
-        if ($result->num_rows == 1) {
-            $user = $result->fetch_assoc();
-            $usuario = [
-                "Usuario" => $user['Usuario'],
-                "Gmail" => $user['Gmail']
-            ];
-            return $usuario;
+        $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows > 0) {
+            return $resultado->fetch_assoc();
         } else {
             return null;
         }
-
-    }
-
+    }             
 }

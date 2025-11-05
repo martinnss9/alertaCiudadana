@@ -1,13 +1,5 @@
 <?php
-include 'register.php';
-if(session_status() == PHP_SESSION_NONE){
-    session_start();
-}
-if (!isset($_SESSION['usuario'])) {
-    #header("Location:/proyecto final/app/presentacion/paginas/applogin.php");
-    #exit();
-}
-$usuario = $_SESSION['Usuario'];
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -22,12 +14,14 @@ $usuario = $_SESSION['Usuario'];
 <header>
 <h1>Alerta Ciudadana</h1>
 <nav>
-<a href="index.php">Inicio</a>
-<a href="app/presentacion/paginas/reportar.php">Reportar</a>
-<a href="app/presentacion/paginas/misreportes.php">Mis Reportes</a>
-<a href="app/presentacion/paginas/logout.php">Cerrar Sesion</a>
-
-<?php echo $_SESSION['Gmail'] ; ?>
+<?php if (isset($_SESSION['usuario'])){?>
+        <a href="app/presentacion/paginas/reportar.php">Reportar</a>
+        <a href="app/presentacion/paginas/misreportes.php">Mis Reportes</a>
+        <a href="app/presentacion/paginas/logout.php">Cerrar Sesion</a>
+    <?php } else {?>
+        <a href="app/presentacion/paginas/applogin.php">Iniciar Sesion</a>
+        <a href="app/presentacion/paginas/register.php">Registrarse</a>
+    <?php } ?>
 </nav>
 </header>
 
@@ -48,7 +42,13 @@ $usuario = $_SESSION['Usuario'];
 
             <p>De esta manera, ayudamos entre todos a mejorar la ciudad y facilitar la reparacion de los problemas mas urgentes.</p>
         </section>
-<h2>Bienvenido, <?php echo htmlspecialchars($usuario); ?> 👋</h2>
+<?php
+if (isset($_SESSION['usuario'])) {
+    echo "<h2>Hola, " . htmlspecialchars($_SESSION['usuario']) . "!</h2>";
+} else {
+    echo "<h2>Hola, Invitado!</h2>";
+}
+?>
 <p>Usa el menu para reportar problemas y ver tus reportes.</p>
 <h1>🚧 Alerta Ciudadana 🚦</h1>
 
