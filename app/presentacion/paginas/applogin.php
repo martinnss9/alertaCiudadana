@@ -21,7 +21,6 @@ $servicioUsuario->LoguearUsuario($gmail, $password);
 <h1>Alerta Ciudadana</h1>
 <nav>
 <a href="../../../index.php">Inicio</a>
-<a href="app/presentacion/paginas/applogin.php">Iniciar Sesion</a>
 <a href="register.php">Registrarse</a>
 </nav>
 </header>

@@ -1,10 +1,14 @@
 <?php
 session_start();
 
+// Validamos que el usuario esté autenticado.
 if (!isset($_SESSION['usuario'])) {
-    header("Location: applogin.php"); // redirige al login si no hay sesion
+    header("Location: applogin.php"); 
     exit();
 }
+
+// Nota: Se recomienda encarecidamente que en el login también se guarde el ID del usuario:
+// if (!isset($_SESSION['id_usuario'])) { /* ... redirección ... */ }
 
 ?>
 <!DOCTYPE html>
@@ -15,8 +19,22 @@ if (!isset($_SESSION['usuario'])) {
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../css/styles.css">
     <style>
-        #map { height: 400px; width: 100%; margin-bottom: 20px; }
-        main { display: flex; gap: 20px; }
+        /* Estilo para que el mapa y el formulario estén lado a lado */
+        main { 
+            display: flex; 
+            gap: 20px; 
+            padding: 20px; /* Añadido para un mejor espaciado */
+        }
+        /* Definimos el tamaño del mapa para que domine la pantalla */
+        #map { 
+            flex: 3; /* El mapa ocupa 3/4 partes del espacio */
+            height: 70vh; /* Ajustado a 70% de la altura de la vista (viewport) */
+            min-height: 500px; 
+        }
+        /* El formulario ocupa 1/4 parte */
+        #formulario-columna {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
@@ -31,20 +49,25 @@ if (!isset($_SESSION['usuario'])) {
     </header>
 
     <main>
-        <div id="map" style="flex: 2; height: 500px;"></div>
-        <div style="flex: 1;">
+        <div id="map"></div>
+        
+        <div id="formulario-columna">
             <h2>Reportar un Problema</h2>
+            <p>**Clic en el mapa** para seleccionar la ubicación del problema.</p>
             <form id="reporteForm">
-                <label>Descripción:</label>
+                <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" required></textarea>
                 <br>
+                <label for="categoria">Categoría:</label>
                 <select id="categoria">
                     <option value="bache">Bache</option>
+                    <option value="luminaria">Luminaria Rota</option>
+                    <option value="basura">Acumulación de Basura</option>
                 </select>
-
-                <label>Foto (opcional):</label>
+                <br>
+                <label for="foto">Foto (opcional):</label>
                 <input type="file" id="foto" accept="image/*">
-
+                <br>
                 <button type="submit">Enviar Reporte</button>
             </form>
         </div>
@@ -56,38 +79,56 @@ if (!isset($_SESSION['usuario'])) {
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        const map = L.map('map').setView([-33.233, -54.383], 13);
+        // Coordenadas de Treinta y Tres, Uruguay: Lat: -33.2268, Lng: -54.3831
+        // Ajustado el zoom a 14 para ver la ciudad de cerca
+        const latTYS = -33.2268;
+        const lngTYS = -54.3831;
+        
+        const map = L.map('map').setView([latTYS, lngTYS], 14);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
         let marcador = null;
+        
+        // Manejador de clic para agregar o mover el marcador
         map.on('click', function(e) {
-            if (marcador) marcador.setLatLng(e.latlng);
-            else marcador = L.marker(e.latlng, {draggable: true}).addTo(map);
+            if (marcador) {
+                marcador.setLatLng(e.latlng);
+            } else {
+                // Crear un nuevo marcador y hacerlo arrastrable
+                marcador = L.marker(e.latlng, {draggable: true}).addTo(map);
+                marcador.bindPopup("Ubicación del Reporte").openPopup();
+            }
         });
 
         document.getElementById("reporteForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            if (!marcador) return alert("Selecciona la ubicación en el mapa.");
+            if (!marcador) return alert("🔴 ¡Importante! Selecciona la ubicación en el mapa haciendo click.");
 
             const coords = marcador.getLatLng();
             const formData = new FormData();
+            
+            // Datos a enviar (el ID del usuario se obtiene del lado del servidor, NO aquí)
             formData.append("descripcion", document.getElementById("descripcion").value);
             formData.append("categoria", document.getElementById("categoria").value);
             formData.append("lat", coords.lat);
             formData.append("lng", coords.lng);
-            formData.append("usuario", JSON.stringify(<?= json_encode($usuario) ?>));
-
+            
             const foto = document.getElementById("foto").files[0];
             if (foto) formData.append("foto", foto);
 
+            // Fetch a 'guardar_reporte.php'
             fetch('guardar_reporte.php', { method: 'POST', body: formData })
                 .then(r => r.text())
                 .then(d => {
                     alert(d);
                     document.getElementById("reporteForm").reset();
+                    // Limpia el mapa después del envío exitoso
                     if (marcador) { map.removeLayer(marcador); marcador = null; }
+                })
+                .catch(error => {
+                    alert('Error al conectar con el servidor: ' + error.message);
                 });
         });
     </script>
 </body>
-</html>   
+</html>

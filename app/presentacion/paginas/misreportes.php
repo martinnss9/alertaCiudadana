@@ -1,25 +1,24 @@
 <?php
-session_start();
-
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
 if (!isset($_SESSION['usuario'])) {
-    echo "No has iniciado sesion.";
-    header("Location: applogin.php"); // redirige al login si no hay sesion
+    header("Location: login.php");
     exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Mis Reportes</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/proyecto%20final/app/presentacion/css/styles.css">
 </head>
 <body>
 <header>
 <h1>Alerta Ciudadana</h1>
 <nav>
-<a href="index.php">Inicio</a>
+<a href="./../../../index.php">Inicio</a>
 <a href="reportar.php">Reportar</a>
 <a href="misreportes.php">Mis Reportes</a>
 <a href="logout.php">Cerrar Sesion</a>
@@ -28,7 +27,7 @@ if (!isset($_SESSION['usuario'])) {
 
 <main>
 <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario']); ?></h2>
-<p>Tu correo: <?php echo htmlspecialchars($_SESSION['gmail']); ?></p>
+<p>Tu correo: <?php echo htmlspecialchars($_SESSION['Gmail']); ?></p>
 <p>Aqui apareceran tus reportes enviados.</p>
 </main>
 

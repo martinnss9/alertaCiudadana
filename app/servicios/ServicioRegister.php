@@ -6,12 +6,7 @@ class ServicioRegister {
     public function IngresarUsuario($nombre, $gmail, $password){
         
         $pUsuario = new PersistenciaUsuario();
-        $datosUsuario = $pUsuario->IngresarUsuario($nombre, $gmail, $password);
-        if($datosUsuario){
-            $error = "El usuario ya existe.";
-            header("Location: ../../presentacion/paginas/register.php?error=" . urlencode($error));
-            exit();
-        }else{
-        }
+        $datosUsuario = $pUsuario->RegistrarUsuario($nombre, $gmail, $password);
+        //return $datosUsuario;
     }
 }
