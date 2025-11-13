@@ -4,13 +4,10 @@ include "../../persistencia/PersistenciaUsuario.php";
 
 class ServicioUsuario {
     public function LoguearUsuario($gmail, $password) 
-    { // <-- ¡Faltaba esta llave de apertura!
+    {
         $persistencia = new PersistenciaUsuario();
-        // Usamos $usuario (minúscula) para ser consistente
-        // CORRECCIÓN: Cambiamos el nombre del método para que coincida con PersistenciaUsuario.php
-        $usuario = $persistencia->IngresarUsuario($gmail, $password); 
-
-        // Se eliminó la llave extra que estaba aquí
+        $usuario = $persistencia->obtenerUsuarioPorCredenciales($gmail, $password);
+        
         if ($usuario) {
             session_start();
             $_SESSION['usuario'] = $usuario['Usuario'];

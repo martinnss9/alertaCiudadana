@@ -1,7 +1,6 @@
 <?php
-if(session_status() == PHP_SESSION_NONE){
-    session_start();
-}
+session_start();
+
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
@@ -27,7 +26,6 @@ if (!isset($_SESSION['usuario'])) {
 
 <main>
 <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario']); ?></h2>
-<p>Tu correo: <?php echo htmlspecialchars($_SESSION['Gmail']); ?></p>
 <p>Aqui apareceran tus reportes enviados.</p>
 </main>
 

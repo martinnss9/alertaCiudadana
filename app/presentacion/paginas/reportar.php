@@ -1,14 +1,11 @@
 <?php
 session_start();
+require_once "../../servicios/ServicioUsuario.php";
 
-// Validamos que el usuario esté autenticado.
 if (!isset($_SESSION['usuario'])) {
     header("Location: applogin.php"); 
     exit();
 }
-
-// Nota: Se recomienda encarecidamente que en el login también se guarde el ID del usuario:
-// if (!isset($_SESSION['id_usuario'])) { /* ... redirección ... */ }
 
 ?>
 <!DOCTYPE html>
@@ -60,9 +57,7 @@ if (!isset($_SESSION['usuario'])) {
                 <br>
                 <label for="categoria">Categoría:</label>
                 <select id="categoria">
-                    <option value="bache">Bache</option>
-                    <option value="luminaria">Luminaria Rota</option>
-                    <option value="basura">Acumulación de Basura</option>
+                    <option value="Bache">Bache</option>
                 </select>
                 <br>
                 <label for="foto">Foto (opcional):</label>
@@ -108,27 +103,29 @@ if (!isset($_SESSION['usuario'])) {
             const formData = new FormData();
             
             // Datos a enviar (el ID del usuario se obtiene del lado del servidor, NO aquí)
-            formData.append("descripcion", document.getElementById("descripcion").value);
-            formData.append("categoria", document.getElementById("categoria").value);
             formData.append("lat", coords.lat);
             formData.append("lng", coords.lng);
             
             const foto = document.getElementById("foto").files[0];
             if (foto) formData.append("foto", foto);
 
-            // Fetch a 'guardar_reporte.php'
-            fetch('guardar_reporte.php', { method: 'POST', body: formData })
-                .then(r => r.text())
-                .then(d => {
-                    alert(d);
-                    document.getElementById("reporteForm").reset();
-                    // Limpia el mapa después del envío exitoso
-                    if (marcador) { map.removeLayer(marcador); marcador = null; }
-                })
-                .catch(error => {
-                    alert('Error al conectar con el servidor: ' + error.message);
-                });
+            // Fetch a reporte.php para enviar el reporte
+            fetch("reportar.php", {
+                method: "POST",
+                body: formData
+            }).then(response => response.text())
+            .then(data => {
+                alert(data);
+                  // Opcional: Resetear el formulario y el marcador
+                document.getElementById("reporteForm").reset();
+                map.removeLayer(marcador);
+                marcador = null;
+            })
+            .catch(error => {
+                console.error("Error:", error);   
+                    alert("Error al enviar el reporte."); 
+        });
         });
     </script>
 </body>
-</html>
+</html> 

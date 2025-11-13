@@ -37,7 +37,7 @@ session_start();
             <h3>¿Como funciona?</h3>
             <ol>
                 <li>📌 Abri la pestaña <strong>Reportar</strong> y marca el lugar en el mapa.</li>
-                <li>✍️ Completa el formulario con la descripcion, categoria y una foto del incidente.</li>
+                <li>✍️ Completa el formulario con la descripcion y una foto del incidente.</li>
                 <li>👀 Segui el estado de tu reporte en la seccion <strong>Mis Reportes</strong>.</li>
             </ol>
 
