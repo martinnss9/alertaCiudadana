@@ -14,7 +14,7 @@ session_start();
 <header>
 <h1>Alerta Ciudadana</h1>
 <nav>
-<?php if (isset($_SESSION['usuario'])){?>
+<?php if (isset($_SESSION['usuario']) && isset($_SESSION['id_usuario'])) {?>
         <a href="app/presentacion/paginas/reportar.php">Reportar</a>
         <a href="app/presentacion/paginas/misreportes.php">Mis Reportes</a>
         <a href="app/presentacion/paginas/logout.php">Cerrar Sesion</a>

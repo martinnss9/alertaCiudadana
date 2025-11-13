@@ -1,23 +1,24 @@
 <?php   
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 include "../../persistencia/PersistenciaUsuario.php";
 
 class ServicioUsuario {
-    public function LoguearUsuario($gmail, $password) 
-    {
+    public function LoguearUsuario($gmail, $password) {
         $persistencia = new PersistenciaUsuario();
         $usuario = $persistencia->obtenerUsuarioPorCredenciales($gmail, $password);
-        
+    
         if ($usuario) {
             session_start();
-            $_SESSION['usuario'] = $usuario['Usuario'];
-            header("Location: ../../../index.php");
-            echo $usuario['Usuario'];
+            $_SESSION['usuario'] = $usuario['Usuario']; 
+            $_SESSION['id_usuario'] = $usuario['id'];  
+        
+            header("Location: ../paginas/misreportes.php");
             exit();
         } else {
-            $error = "Credenciales invalidas. Por favor, intenta de nuevo.";
-            header("Location: ../paginas/applogin.php?error=" . urlencode($error));
-            exit();
+            echo "Datos incorrectos";
         }
     }
 }

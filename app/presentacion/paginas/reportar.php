@@ -109,8 +109,10 @@ if (!isset($_SESSION['usuario'])) {
             const foto = document.getElementById("foto").files[0];
             if (foto) formData.append("foto", foto);
 
-            // Fetch a reporte.php para enviar el reporte
-            fetch("reportar.php", {
+            // Fetch a servicio para enviar el reporte
+            formData.append("descripcion", document.getElementById("descripcion").value);
+            formData.append("categoria", document.getElementById("categoria").value);
+            fetch("../../servicios/ServicioReporte.php", {
                 method: "POST",
                 body: formData
             }).then(response => response.text())
@@ -122,9 +124,10 @@ if (!isset($_SESSION['usuario'])) {
                 marcador = null;
             })
             .catch(error => {
-                console.error("Error:", error);   
-                    alert("Error al enviar el reporte."); 
-        });
+                console.error("Error:", error);
+                alert("Error al enviar el reporte."); 
+                
+                });
         });
     </script>
 </body>

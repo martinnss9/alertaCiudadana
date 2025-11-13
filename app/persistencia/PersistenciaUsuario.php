@@ -23,10 +23,10 @@ class PersistenciaUsuario {
         $resultado = $stmt->get_result();
 
         if ($resultado->num_rows > 0) {
-            return true; // Usuario ya existe
+            return true; 
         } else {
     
-            $stmt = $conn->prepare("INSERT INTO usuarios (usuario, gmail, contrasela) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO usuarios (Usuario, gmail, contrasela) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $nombre, $gmail, $password);
             return $stmt->execute();
         }
