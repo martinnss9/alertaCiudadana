@@ -1,14 +1,12 @@
 <?php
 session_start();
 
-// Validamos que el usuario esté autenticado.
+require_once '../../servicio/ServicioReporte.php';
+
 if (!isset($_SESSION['usuario'])) {
     header("Location: applogin.php"); 
     exit();
 }
-
-// Nota: Se recomienda encarecidamente que en el login también se guarde el ID del usuario:
-// if (!isset($_SESSION['id_usuario'])) { /* ... redirección ... */ }
 
 ?>
 <!DOCTYPE html>
@@ -60,9 +58,7 @@ if (!isset($_SESSION['usuario'])) {
                 <br>
                 <label for="categoria">Categoría:</label>
                 <select id="categoria">
-                    <option value="bache">Bache</option>
-                    <option value="luminaria">Luminaria Rota</option>
-                    <option value="basura">Acumulación de Basura</option>
+                    <option value="Bache">Bache</option>
                 </select>
                 <br>
                 <label for="foto">Foto (opcional):</label>
