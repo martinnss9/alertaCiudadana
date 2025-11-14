@@ -2,6 +2,11 @@
 session_start();
 require_once "../../servicios/ServicioUsuario.php";
 
+<<<<<<< HEAD
+=======
+require_once '../../servicio/ServicioReporte.php';
+
+>>>>>>> 3834902e2f0249fa32f00703b801fcd06c615d22
 if (!isset($_SESSION['usuario'])) {
     header("Location: applogin.php"); 
     exit();
