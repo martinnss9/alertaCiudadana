@@ -1,9 +1,9 @@
-<?php   
+<?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-include "../../persistencia/PersistenciaUsuario.php";
+include __DIR__ . "/../persistencia/PersistenciaUsuario.php";
 
 class ServicioUsuario {
     public function LoguearUsuario($gmail, $password) {
@@ -11,8 +11,9 @@ class ServicioUsuario {
         $usuario = $persistencia->obtenerUsuarioPorCredenciales($gmail, $password);
     
         if ($usuario) {
-            session_start();
-            $_SESSION['usuario'] = $usuario['Usuario']; 
+
+            // ❌ NO LLAMAR session_start() de nuevo
+            $_SESSION['usuario'] = $usuario['usuario']; 
             $_SESSION['id_usuario'] = $usuario['id'];  
         
             header("Location: ../paginas/misreportes.php");

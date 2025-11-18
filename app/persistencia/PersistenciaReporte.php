@@ -10,7 +10,6 @@ public function crearReporte($descripcion, $foto, $categoria, $latitud, $longitu
             return $stmt->execute() ? ['exito' => true] : ['exito' => false, 'mensaje' => 'Error al guardar'];
 }   
 
-<<<<<<< HEAD
 public function ObtenerReportesPorUsuario($id_usuario) {
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM reportes WHERE id_usuario = ?");
@@ -25,6 +24,5 @@ public function ObtenerReportesPorUsuario($id_usuario) {
     return $reportes;
 
 }
-=======
->>>>>>> 3834902e2f0249fa32f00703b801fcd06c615d22
+
 }
